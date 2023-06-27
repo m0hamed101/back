@@ -16,6 +16,25 @@ app.use(cors())
 
 
 
+app.use(function (req, res, next) {
+    const allowedOrigins = ["https://drinks-shop-c475.onrender.com/", "http://localhost:3000"];
+    const origin = req.headers.origin;
+
+    if (allowedOrigins.includes(origin)) {
+        res.header('Access-Control-Allow-Origin', origin);
+        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+        res.header('Access-Control-Allow-Credentials', true);
+        res.header(
+            "Access-Control-Allow-Methods",
+            "GET, POST, PUT, DELETE, OPTIONS"
+        );
+    }
+
+    next();
+});
+
+
+
 app.get('/populer_items', async (req, res) => {
     const data_populer = await populer_items.find();
     res.json(data_populer)
@@ -25,8 +44,6 @@ app.get('/:id', async (req, res) => {
     const backdata = await item.find(req.params)
     res.json(backdata)
 })
-
-
 
 app.get('/', async (req, res) => {
     const data = await Product.find();
