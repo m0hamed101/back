@@ -28,7 +28,7 @@ app.get('/:id', async (req, res) => {
 
 
 
-app.get('/', async (req, res) => {
+app.get('/shop', async (req, res) => {
     const data = await Product.find();
     res.json(data)
 })
