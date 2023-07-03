@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const mongoose = require("mongoose")
 const dotenv = require('dotenv')
-const port = 5000
+const port = 4000
 app.use(express.json());
 const cors = require("cors")
 app.use(cors())
@@ -10,6 +10,7 @@ dotenv.config();
 // routers
 const productsRouter = require("./router/products")
 const populer_itemsRouter = require("./router/populer_items")
+const userRoutes =require('./router/user')
 
 mongoose.connect(process.env.CONNECTION)
     .then(() => console.log("DB Connection Successfull!")).catch((err) => { console.log(err); });
@@ -32,6 +33,8 @@ app.use(function (req, res, next) {
 
 app.use("", productsRouter)
 app.use("", populer_itemsRouter)
+app.use('/api/user', userRoutes)
+
 
 app.listen(port, () => {
     console.log(`http://localhost:${port}`)
